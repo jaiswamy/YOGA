@@ -8,7 +8,6 @@ ENV GRAILS_HOME=/opt/grails
 ENV PATH="$GRAILS_HOME/bin:$PATH"
 
 COPY ./Internationalyogaday2023 /app
-RUN chmod +x /app/grailsw
 RUN ./grailsw war
 
 
