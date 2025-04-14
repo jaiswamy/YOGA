@@ -13,7 +13,7 @@ RUN ./grailsw war
 
 
 
-FROM tomcat:9.0.82-jdk8-temurin-alpine
+FROM tomcat:9.0.82-jdk8-temurin
 LABEL "Project"="Internationalyogaday2023"
 LABEL "Author"="Jai"
 
