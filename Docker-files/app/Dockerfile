@@ -8,10 +8,9 @@ ENV GRAILS_HOME=/opt/grails
 ENV PATH="$GRAILS_HOME/bin:$PATH"
 
 COPY ./Internationalyogaday2023 /app
-RUN ./grailsw war
+RUN grails war
 
-
-
+  
 FROM tomcat:9.0.82-jdk8-temurin
 LABEL "Project"="Internationalyogaday2023"
 LABEL "Author"="Jai"
