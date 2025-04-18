@@ -1,16 +1,19 @@
 version: '3.8'
-services:   
+services:
   db:
     image: mysql:5.6
     container_name: yogadb
     restart: always
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf.d:/etc/mysql/conf.d
     environment:
       MYSQL_ROOT_PASSWORD: mysql123
       MYSQL_DATABASE: db_inyogaday
       MYSQL_USER: yogauser123
       MYSQL_PASSWORD: YogaDay123@HitpL2023
     ports:
-      - "3306:3306"
+      - "3307:3306"
     networks:
       - tomcat-network-yoga
     healthcheck:
@@ -18,8 +21,6 @@ services:
       interval: 10s
       retries: 5
       start_period: 20s
-
-      
   tomcat:
     build:
       context: ./Docker-file/app
@@ -30,8 +31,9 @@ services:
       db:
         condition: service_healthy
     environment:
+      CATALINA_OPTS: "-Xms64m -Xmx128m -XX:+UseContainerSupport -XX:MaxRAMPercentage=30.0"
       MYSQL_HOST: db
-      MYSQL_PORT: 3306
+      MYSQL_PORT: 3307
       MYSQL_DB: db_inyogaday
       MYSQL_USER: yogauser123
       MYSQL_PASSWORD: YogaDay123@HitpL2023
@@ -42,7 +44,7 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: nginx
+    container_name: yoga-nginx
     restart: always
     ports:
       - "8085:80"
@@ -60,6 +62,3 @@ services:
 networks:
   tomcat-network-yoga:  # Custom network for communication between Tomcat and MySQL
     driver: bridge
-
-
- 
